@@ -20,9 +20,9 @@ onMounted(() => {
   mapInstance.value = new Map({
     target: refMap.value,
     controls: defaults({
-      zoom: false, // Disable default zoom controls
-      rotate: false,
-      attribution: false,
+      // zoom: false, // Disable default zoom controls
+      // rotate: false,
+      // attribution: false,
     }),
     layers: [
       new TileLayer({
@@ -40,6 +40,16 @@ onMounted(() => {
 defineExpose({ mapInstance })
 </script>
 <template>
-  <div ref="refMap" style="width: 100%; height: 100%"></div>
+  <div
+    ref="refMap"
+    class="ol-map-block"
+    style="width: 100%; height: 100%"
+  ></div>
 </template>
-<style scoped></style>
+<style scoped>
+.ol-map-block {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+</style>
