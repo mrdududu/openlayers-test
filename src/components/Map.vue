@@ -4,6 +4,11 @@ import Map from 'ol/Map'
 import View from 'ol/View'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
+import { Feature } from 'ol'
+import Point from 'ol/geom/Point'
+import VectorLayer from 'ol/layer/Vector'
+import VectorSource from 'ol/source/Vector'
+import { Icon, Style } from 'ol/style'
 import { defaults } from 'ol/control/defaults'
 import { fromLonLat } from 'ol/proj'
 // type Props = {}
@@ -84,8 +89,33 @@ onMounted(async () => {
     longitude = position.coords.longitude
   } catch (err) {}
 
-  const transformedNewCoordinates = fromLonLat([longitude, latitude])
-  mapInstance.value.getView().setCenter(transformedNewCoordinates)
+  const markerCoordinates = fromLonLat([longitude, latitude])
+  mapInstance.value.getView().setCenter(markerCoordinates)
+
+  const marker = new Feature({
+    geometry: new Point(markerCoordinates),
+  })
+
+  marker.setStyle(
+    new Style({
+      image: new Icon({
+        anchor: [0.5, 1],
+        src: 'img/pin.png', // Replace with your icon path
+        // scale: 0.1, // Adjust size as needed
+      }),
+    }),
+  )
+
+  // Create a vector source and layer for the marker
+  const vectorSource = new VectorSource({
+    features: [marker],
+  })
+
+  const vectorLayer = new VectorLayer({
+    source: vectorSource,
+  })
+
+  mapInstance.value.addLayer(vectorLayer)
 })
 
 defineExpose({ mapInstance })
