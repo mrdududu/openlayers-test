@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Map from '@/components/Map.vue'
 // type Props = {}
 // type Emits = {
 //   (e: 'click', value: any): void
@@ -8,5 +9,6 @@
 // const emits = defineEmits<Emits>()
 </script>
 <template>
-  <div>Index page</div>
+  <Map />
 </template>
+<style scoped></style>
